@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     123
+    <el-button type="success">默认按钮</el-button>
   </div>
 </template>
 

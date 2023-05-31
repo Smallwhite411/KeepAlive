@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <div class="app-container center">
       <el-empty description="Admin 权限可见" />
