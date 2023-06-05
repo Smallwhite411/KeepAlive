@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    123
-    <el-button type="success">默认按钮</el-button>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -15,6 +14,24 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
+* {
+  padding: 0;
+  margin: 0;
+}
+html,
+body {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+#app {
+  height: 100%;
+}
+
 
 </style>

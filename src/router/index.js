@@ -1,11 +1,7 @@
 import Layout from '@/layout/index.vue'
-import {
-    createRouter,
-    createWebHashHistory,
-    createWebHistory
-} from 'vue-router'
+import VueRouter from 'vue-router'
 /** 常驻路由 */
-export const constantRoutes = [{
+const constantRoutes = [{
         path: "/",
         component: Layout,
         redirect: "/dashboard", //重定向到首页
@@ -23,6 +19,7 @@ export const constantRoutes = [{
     {
         path: "/login",
         component: () => import("@/views/Login/index.vue"),
+        name: "Login",
         meta: {
             hidden: true
         }
@@ -90,15 +87,22 @@ export const asyncRoutes = [{
     }
 ]
 
-// 优化的代码，只需要修改hash或html5来实现路由模式的切换  #/
-// html5其实说的是由 html5提供的history API来实现路由 /
-const router = createRouter({
-    history: import.meta.env.VITE_ROUTER_HISTORY === "hash" ?
-        createWebHashHistory(
-            import.meta.env.VITE_PUBLIC_PATH) :
-        createWebHistory(
-            import.meta.env.VITE_PUBLIC_PATH),
-    routes: constantRoutes
+
+const createRouter = () => new VueRouter({
+    mode: "history",
+    scrollBehavior: () => ({
+        y: 0
+    }), //切换路由始终保持页面顶部
+    routes: constantRoutes //只挂载静态路由！！
 })
+
+
+const router = createRouter()
+
+export function resetRouter() {
+    const newRouter = createRouter()
+    router.match = new newRouter.match // 重置路由，不同用户菜单权限会有所不同，在切换用户时，会出现菜单错乱的情况
+}
+
 
 export default router;

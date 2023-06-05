@@ -1,15 +1,30 @@
-<script lang="ts" setup>
+<script lang="ts">
 
-import { ref } from "vue";
 import AdminDashboard from "./Admin/index.vue"
 import EditorDashboard from "./Editor/index.vue"
 
 
-let currentRole = ref('admin')
+export default {
+    name: "App",
+    components:{
+    AdminDashboard,
+    EditorDashboard
+},  
+  data(){
+    return{
+      currentRole: "admin"
+    }
+  },
+    mounted() {
+      console.log(this.$store.state.sum);
+    },
+
+
+  };
 
 </script>
 
 <template>
   <!-- 使用了component 动态组件 -->
-  <component :is="currentRole === 'admin' ? AdminDashboard : EditorDashboard" />
+  <component :is="$store.state.user.roles[0] === 'admin' ? 'AdminDashboard' : 'EditorDashboard'" />
 </template>
