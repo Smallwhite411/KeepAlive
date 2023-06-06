@@ -15,6 +15,11 @@ export const loginApi = (url, data) => {
 }
 
 /** 获取用户详情 */
-export function getUserInfoApi(url) {
-  return request.get(url)
+export function getUserInfoApi(url,params) {
+  console.log(url,params)
+  return request.get(url, {
+    params: {
+      id: params.id
+    }
+  })
 }

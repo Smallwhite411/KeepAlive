@@ -20,12 +20,7 @@ NProgress.configure({
 
 // 全局前置守卫 在路由跳转之前执行
 router.beforeEach(async (to, _from, next) => {
-  console.log("form",to)
   NProgress.start(); //路由跳转前的动画 进度条开始
-  // console.log("在这", getToken(), to, _from, next)
-  // next()
-  // console.log("我执行了", getToken())
-  // NProgress.done();
   // 判断该用户是否登录
   if (getToken()) {
     // 每切换一次路由，就会执行一次
@@ -35,8 +30,6 @@ router.beforeEach(async (to, _from, next) => {
       next({
         path: "/"
       })
-      // next()
-      // console.log("我执行了", getToken())
       NProgress.done(); //进度条结束
     } else {
       // 检查用户是否已获得其权限角色
@@ -45,15 +38,17 @@ router.beforeEach(async (to, _from, next) => {
           // 是否开启动态路由
           if (asyncRouteSettings.open) {
             // 注意：角色必须是一个数组！ 例如: ['admin'] 或 ['developer', 'editor']
-            console.log("我执行了",1)
-            await store.dispatch("user/getInfo")
-            // const roles = store.state.user.roles
-            // 根据角色生成可访问的 Routes（可访问路由 = 常驻路由 + 有访问权限的动态路由）
-            // store.commit("setRoles", roles)
-          } else {
-            // 没有开启动态路由功能，则启用默认角色
-            console.log("我执行了",2)
 
+            await store.dispatch("user/getInfo",{
+              id: "admin"
+            })
+            // 根据角色生成可访问的 Routes（可访问路由 = 常驻路由 + 有访问权限的动态路由）
+            const roles = store.state.user.roles;
+
+            store.dispatch("permission/setRoutes", roles)
+          } else {
+
+            // 没有开启动态路由功能，则启用默认角色
             store.commit("user/setRoles", asyncRouteSettings.defaultRoles)
           }
           // 将'有访问权限的动态路由' 添加到 Router 中

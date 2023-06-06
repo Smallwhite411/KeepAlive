@@ -1,7 +1,7 @@
 import Layout from '@/layout/index.vue'
 import VueRouter from 'vue-router'
 /** 常驻路由 */
-const constantRoutes = [{
+export const constantRoutes = [{
         path: "/",
         component: Layout,
         redirect: "/dashboard", //重定向到首页
@@ -54,7 +54,7 @@ export const asyncRoutes = [{
         meta: {
             title: "权限管理",
             svgIcon: "lock",
-            roles: ["admin", "editor"], // 可以在根路由中设置角色
+            roles: ["admin", "root"], // 可以在根路由中设置角色
             alwaysShow: true // 将始终显示根菜单
         },
         children: [{
@@ -99,9 +99,13 @@ const createRouter = () => new VueRouter({
 
 const router = createRouter()
 
-export function resetRouter() {
-    const newRouter = createRouter()
-    router.match = new newRouter.match // 重置路由，不同用户菜单权限会有所不同，在切换用户时，会出现菜单错乱的情况
+export function resetRouter() { //用户权限切换  路由重置
+
+    try{
+        router.matcher = createRouter().matcher // 重置路由，不同用户菜单权限会有所不同，在切换用户时，会出现菜单错乱的情况
+    } catch(err) {
+        window.location.reload()
+    }
 }
 
 

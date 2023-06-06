@@ -2,7 +2,7 @@
 
 import AdminDashboard from "./Admin/index.vue"
 import EditorDashboard from "./Editor/index.vue"
-
+import store from "@/store";
 
 export default {
     name: "App",
@@ -15,9 +15,9 @@ export default {
       currentRole: "admin"
     }
   },
-    mounted() {
-      console.log(this.$store.state.sum);
-    },
+    updated() {
+      console.log("dashboard",store.state.user.roles)
+    }
 
 
   };

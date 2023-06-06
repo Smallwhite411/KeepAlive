@@ -24,7 +24,6 @@ const user = {
                 loginApi("/users/login",value)
                     .then((res) => {
                         // 朝cookie中存入 token
-                        console.log("我是传过来的",Vue.prototype,this)
                         setToken(res.data.token)
                         context.commit("settokens", res.data.token)
                         Vue.prototype.$message({
@@ -41,16 +40,15 @@ const user = {
             })
         },
 
-        getInfo(context) {
+        getInfo(context, value) {
             return new Promise((resolve, reject) => {
-                getUserInfoApi("/users/info")
+                getUserInfoApi("/users/info",value)
                     .then((res) => {
                         // 服务端返回的用户详情中只有 username和 roles
                         const data = res.data
                         context.commit("setName", data.username)
                         // 验证返回的 roles 是否是一个非空数组
                         if (data.roles && data.roles.length > 0) {
-                        console.log(context)
 
                             context.commit("setRoles", data.roles)
 
@@ -66,8 +64,8 @@ const user = {
             })
         },
 
-        changeJurisdiction(context) {
-            if (context.state.roles[0] === 'admin') {
+        changeJurisdiction(context,value) {
+            if (value !== 'admin') {
                 context.commit("setRoles",["root"])
             } else {
                 context.commit("setRoles",["admin"])
@@ -75,10 +73,15 @@ const user = {
         },
 
         async changeRoles(context, value) {   /** 切换角色 */
-            const newToken = "token-" + value
+            const newToken = "token-" 
             context.commit("settokens", newToken)
-            await this.getInfo()
+            await context.dispatch("getInfo",{
+                id: value.id
+            })
             resetRouter()
+            value.routes.forEach((item) => {
+                router.addRoute(item)
+              })
         }
     },
     mutations: {
