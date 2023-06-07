@@ -4,7 +4,9 @@ import {
 } from "@/api/login";
 import Vue from "vue";
 import asyncRouteSettings from "@/config/async-route";
-import router, { resetRouter } from "@/router";
+import router, {
+    resetRouter
+} from "@/router";
 import {
     removeToken,
     setToken
@@ -21,7 +23,7 @@ const user = {
     actions: {
         login(context, value) {
             return new Promise((resolve, reject) => {
-                loginApi("/users/login",value)
+                loginApi("/users/login", value)
                     .then((res) => {
                         // 朝cookie中存入 token
                         setToken(res.data.token)
@@ -30,8 +32,8 @@ const user = {
                             message: '登陆成功',
                             type: "success",
                             center: true,
-                          })
-                          router.push("/dashboard")
+                        })
+                        router.push("/dashboard")
                         resolve(true)
                     })
                     .catch((error) => {
@@ -42,7 +44,7 @@ const user = {
 
         getInfo(context, value) {
             return new Promise((resolve, reject) => {
-                getUserInfoApi("/users/info",value)
+                getUserInfoApi("/users/info", value)
                     .then((res) => {
                         // 服务端返回的用户详情中只有 username和 roles
                         const data = res.data
@@ -64,24 +66,31 @@ const user = {
             })
         },
 
-        changeJurisdiction(context,value) {
+        changeJurisdiction(context, value) {
             if (value !== 'admin') {
-                context.commit("setRoles",["root"])
+                context.commit("setRoles", ["root"])
             } else {
-                context.commit("setRoles",["admin"])
+                context.commit("setRoles", ["admin"])
             }
         },
 
-        async changeRoles(context, value) {   /** 切换角色 */
-            const newToken = "token-" 
+        async changeRoles(context, value) {
+            /** 切换角色 */
+            // console.log("valuesss",context,value)
+            const newToken = "token-"
             context.commit("settokens", newToken)
-            await context.dispatch("getInfo",{
-                id: value.id
-            })
+            // await context.dispatch("getInfo",{
+            //     id: value.id
+            // })
+
+            console.log("valuesss", value.routes)
             resetRouter()
-            value.routes.forEach((item) => {
+            value.routes.forEach((item) => { //value有问题
                 router.addRoute(item)
-              })
+                console.log("dddd", item)
+            })
+            // router.addRoutes(value.routes)
+            console.log(router.getRoutes())
         }
     },
     mutations: {
@@ -94,12 +103,13 @@ const user = {
         setName(state, value) {
             state.username = value
         },
-        resetToken (state) {  /** 重置 Token */
+        resetToken(state) {
+            /** 重置 Token */
             removeToken()
             state.token = ""
             state.roles = []
-          },
-        logout (state) {
+        },
+        logout(state) {
             removeToken()
             state.token = ""
             state.roles = []

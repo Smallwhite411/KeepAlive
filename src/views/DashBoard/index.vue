@@ -1,9 +1,8 @@
-<script lang="ts">
+<script>
 
 import AdminDashboard from "./Admin/index.vue"
 import EditorDashboard from "./Editor/index.vue"
-import store from "@/store";
-
+import router from "@/router";
 export default {
     name: "App",
     components:{
@@ -16,7 +15,7 @@ export default {
     }
   },
     updated() {
-      console.log("dashboard",store.state.user.roles)
+      console.log("dashboard", router.getRoutes())
     }
 
 

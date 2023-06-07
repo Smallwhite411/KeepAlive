@@ -26,18 +26,18 @@ export const constantRoutes = [{
     },
     {
         path: "/403",
-        component: () => import("@/views/ErrorPage/NoResourcesFound"),
+        component: () => import("@/views/ErrorPage/NoResourcesFound/index.vue"),
         meta: {
             hidden: true
         }
     },
     {
         path: "/404",
-        component: () => import("@/views/ErrorPage/AccessDenied"),
+        component: () => import("@/views/ErrorPage/AccessDenied/index.vue"),
         meta: {
             hidden: true
         },
-        alias: "/:pathMatch(.*)*"
+        // alias: "/:pathMatch(.*)*"
     },
 ]
 
@@ -78,7 +78,7 @@ export const asyncRoutes = [{
         ]
     },
     {
-        path: "/:pathMatch(.*)*", // Must put the 'ErrorPage' route at the end, 必须将 'ErrorPage' 路由放在最后
+        path: "/:catchAll(.*)", // Must put the 'ErrorPage' route at the end, 必须将 'ErrorPage' 路由放在最后 /:pathMatch(.*)*
         redirect: "/404",
         name: "ErrorPage",
         meta: {
@@ -97,7 +97,7 @@ const createRouter = () => new VueRouter({
 })
 
 
-const router = createRouter()
+export const router = createRouter()
 
 export function resetRouter() { //用户权限切换  路由重置
 

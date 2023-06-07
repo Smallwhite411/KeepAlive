@@ -14,46 +14,54 @@
 </template>
 
 <script>
-    import { removeToken } from '@/utils/cookies';
+import router from '@/router';
+import { removeToken } from '@/utils/cookies';
 import { mapActions, mapState } from 'vuex';
-        export default {
-            name: "Layout",
-            methods: {
-                removetoken() {
-                    removeToken()
-                    this.$router.push("/login")
-                },
-                changeAdmin() {
-                    this.changeJurisdiction('admin')
-                    this.changeRoles({
-                        routes: this.dynamicRoutes,
-                        id: "admin"
-                    })
-                    this.setRoutes(this.roles)
-                    this.$router.push("/dashboard")
-                    console.log(this.roles)
-                },
-                changeRoot() {
-                    this.changeJurisdiction('root')
-                    this.setRoutes(this.roles)
-                    this.changeRoles({
-                        routes: this.dynamicRoutes,
-                        id: "root"
-                    })
-                    this.$router.push("/dashboard")
-                    console.log(this.roles)
-                },
-                ...mapActions('user',{
-                    changeJurisdiction: "changeJurisdiction",
-                    changeRoles: "changeRoles"
-                }),
-                ...mapActions('permission',{
-                    setRoutes: "setRoutes",
-                })
-            },
-            computed: {
-                ...mapState("user", ["username","roles","token"]),
-                ...mapState("permission", ["dynamicRoutes"]),
-            }
-        }
+// import router from '@/router';
+export default {
+    name: "Layout",
+    methods: {
+        removetoken() {
+            removeToken()
+            this.$router.push("/login")
+        },
+        changeAdmin() {
+            this.changeJurisdiction('admin')
+            this.setRoutes(this.roles)
+            let dyRoutes = this.dynamicRoutes;
+            this.changeRoles({
+                id: "admin",
+                routes: dyRoutes,
+            })
+            // this.setRoutes(this.roles)
+            this.$router.push("/dashboard")
+            console.log("changeAdmin", this.dynamicRoutes)
+        },
+        changeRoot() {
+            this.changeJurisdiction('root')
+            this.setRoutes(this.roles)
+            let dyRoutes = this.dynamicRoutes;
+            this.changeRoles({
+                id: "root",
+                routes: dyRoutes,
+            })
+            this.$router.push("/dashboard")
+            console.log("changeRoot", this.dynamicRoutes)
+        },
+        ...mapActions('user', {
+            changeJurisdiction: "changeJurisdiction",
+            changeRoles: "changeRoles"
+        }),
+        ...mapActions('permission', {
+            setRoutes: "setRoutes",
+        })
+    },
+    computed: {
+        ...mapState("user", ["username", "roles", "token"]),
+        ...mapState("permission", ["routes", "dynamicRoutes"]),
+    },
+    updated() {
+        console.log("getRoutes", router.getRoutes())
+    }
+}
 </script>

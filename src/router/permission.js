@@ -20,6 +20,7 @@ NProgress.configure({
 
 // 全局前置守卫 在路由跳转之前执行
 router.beforeEach(async (to, _from, next) => {
+  console.log("to",to)
   NProgress.start(); //路由跳转前的动画 进度条开始
   // 判断该用户是否登录
   if (getToken()) {
@@ -53,10 +54,10 @@ router.beforeEach(async (to, _from, next) => {
           }
           // 将'有访问权限的动态路由' 添加到 Router 中
           // 添加了两个路由，一个是任意路由（404展示），一个是权限路由
-          // store.state.permission.dynamicRoutes.forEach((route) => {
-          //   // 向路由器添加一条新路由。如果该路由有一个名称，并且已经存在一个具有相同名称的路由，则会覆盖该路由。
-          //   router.addRoute(route)
-          // })
+          store.state.permission.dynamicRoutes.forEach((route) => {
+            // 向路由器添加一条新路由。如果该路由有一个名称，并且已经存在一个具有相同名称的路由，则会覆盖该路由。
+            router.addRoute(route)
+          })
           // 确保添加路由已完成
           // 设置 replace: true, 因此导航将不会留下历史记录
           next({

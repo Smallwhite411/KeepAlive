@@ -1,5 +1,9 @@
-<script lang="ts" setup>
+<script >
 import { useRoute, useRouter } from "vue-router"
+
+export default {
+
+}
 
 const route = useRoute()
 const router = useRouter()

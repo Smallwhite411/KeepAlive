@@ -38,7 +38,6 @@ const permission = {
                         res.push(r)
                     }
                 })
-
                 return res;
             }
             console.log("value",value)
