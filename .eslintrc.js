@@ -22,6 +22,7 @@ module.exports = {
                     'src/components/index.vue',
                     'src/components/**/index.vue',
                     'src/layout/index.vue',
+                    'src/layout/components/**/index.vue',
                     ],   // 匹配views和二级目录中的index.vue
             rules: {
             'vue/multi-word-component-names':"off",

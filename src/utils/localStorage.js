@@ -1,0 +1,16 @@
+import CacheKey from "@/config/cacheKey";
+
+export const getSidebarStatus = () => {
+    return localStorage.getItem(CacheKey.SIDEBAR_STATUS)
+  }
+  export const setSidebarStatus = (sidebarStatus) => {
+    localStorage.setItem(CacheKey.SIDEBAR_STATUS, sidebarStatus)
+  }
+  
+  export const getActiveThemeName = () => {
+    return localStorage.getItem(CacheKey.ACTIVE_THEME_NAME) 
+  }
+  export const setActiveThemeName = (themeName) => {
+    localStorage.setItem(CacheKey.ACTIVE_THEME_NAME, themeName)
+  }
+  
