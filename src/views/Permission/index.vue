@@ -8,6 +8,7 @@
             <div>
                 {{ roles }}
             </div>
+            <div class="el-icon-share"></div>
         </div>
         <router-view></router-view>
     </div>

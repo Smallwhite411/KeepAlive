@@ -34,11 +34,13 @@
 // import path from 'path-browserify'
 import { isExternal } from "@/utils/validate"
 import path from 'path-browserify'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 import SidebarItemLink from "./SidebarItemLink.vue"
 export default {
     name: "SidebarItem",
     components: {
-        SidebarItemLink
+        SidebarItemLink,
+        SvgIcon
     },
     props: {
         item: {

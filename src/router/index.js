@@ -11,7 +11,7 @@ export const constantRoutes = [{
             name: "Dashboard",
             meta: {
                 title: "首页",
-                svgIcon: "dashboard",
+                svgIcon: "data-board",
                 affix: true
             }
         }]
