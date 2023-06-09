@@ -1,6 +1,6 @@
 <template>
     <div :class="{'has-logo':showSidebarLogo}">
-      <logo v-if="showLogo" :collapse="isCollapse" />
+      <SidebarLogo v-if="showSidebarLogo" :collapse="isCollapse" />
       <el-scrollbar wrap-class="scrollbar-wrapper">
         <el-menu
           :default-active="activeMenu"
@@ -22,11 +22,13 @@
 <script>
 import { mapState } from 'vuex';
 import SidebarItem from './SidebarItem.vue';
+import SidebarLogo from './SidebarLogo.vue';
 
 export default {
-    name: "Sidebar",
+    name: "SidebarModule",
     components: {
-        SidebarItem
+        SidebarItem,
+        SidebarLogo
     },
     data() {
         return {

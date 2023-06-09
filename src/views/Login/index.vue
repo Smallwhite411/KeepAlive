@@ -11,7 +11,7 @@
                             </el-form-item>
                             <el-form-item  name="password" prop="password">
                                 <el-input class="input_password"  v-model="form.password"
-                                 placeholder="请输入密码" style="background-color: aqua;" show-password />
+                                 placeholder="请输入密码"  show-password />
                             </el-form-item>
 
 
@@ -145,8 +145,8 @@ export default {
     background-color: #151830;
 }
 .login_card {
-    width: 400px;
-    height: 330px;
+    width: 520px;
+    height: 450px;
     background: #f2f3f7;
     border-radius: 20px;
     margin: auto;

@@ -1,11 +1,12 @@
 import { getSidebarStatus, setSidebarStatus } from "@/utils/localStorage"
 const app = {
+    namespaced: true,
     state : {
         sidebar: {
             opened: getSidebarStatus() !== "closed",
             withoutAnimation: false
         },
-        device: 1,
+        device: "desktop",
 
     },
     actions: {

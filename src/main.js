@@ -7,7 +7,7 @@ import router from './router/index';
 import VueRouter from 'vue-router';
 import store from './store';
 import ElementUI from 'element-ui';
-import '../src/styles/index.css'
+import '@/styles/index.scss'
 
 Vue.config.productionTip = false
 
