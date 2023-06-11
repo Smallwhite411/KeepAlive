@@ -76,21 +76,34 @@ const user = {
 
         async changeRoles(context, value) {
             /** 切换角色 */
-            // console.log("valuesss",context,value)
             const newToken = "token-"
             context.commit("settokens", newToken)
-            // await context.dispatch("getInfo",{
-            //     id: value.id
-            // })
-
-            console.log("valuesss", value.routes)
+            console.log("value",value)
             resetRouter()
             value.routes.forEach((item) => { //value有问题
                 router.addRoute(item)
-                console.log("dddd", item)
             })
-            // router.addRoutes(value.routes)
-            console.log(router.getRoutes())
+            return new Promise((resolve, reject) => {
+                getUserInfoApi("/users/info", value)
+                    .then((res) => {
+                        // 服务端返回的用户详情中只有 username和 roles
+                        const data = res.data
+                        context.commit("setName", data.username)
+                        // 验证返回的 roles 是否是一个非空数组
+                        if (data.roles && data.roles.length > 0) {
+
+                            context.commit("setRoles", data.roles)
+
+                        } else {
+                            // 塞入一个没有任何作用的默认角色，不然路由守卫逻辑会无限循环
+                            context.commit("setRoles", asyncRouteSettings.defaultRoles)
+                        }
+                        resolve(res)
+                    })
+                    .catch((error) => {
+                        reject(error)
+                    })
+            })
         }
     },
     mutations: {
